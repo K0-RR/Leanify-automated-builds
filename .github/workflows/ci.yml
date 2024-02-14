@@ -41,7 +41,7 @@ jobs:
         with:
           files: |
             Leanify
-          token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: v${{ github.run_number }}
           name: Release v${{ github.run_number }}
           body: |
@@ -51,7 +51,7 @@ jobs:
         id: upload_release_asset
         uses: actions/upload-release-asset@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
           asset_path: ./
           asset_name: Leanify
           asset_content_type: application/zip # Replace with the appropriate content type
