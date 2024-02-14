@@ -32,8 +32,9 @@ jobs:
       - name: Print compiler version
         run: ${{ matrix.compiler.cc }} --version
 
-      - name: Run make
-        run: cd Leanify; make
+      - name: Run make and set working dir
+        id: make
+        run: cd Leanify; ${{ matrix.compiler.cc }} --version; make; echo "::set-output name=asset_path::${GITHUB_WORKSPACE}/Leanify/leanify" # pwd; ls
         
       - name: Create Release
         id: create_release
@@ -46,15 +47,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: check where we are and who we are
-        id: release
-        run: echo "::set-output name=asset_path::${GITHUB_WORKSPACE}/Leanify/leanify" # cd Leanify; pwd; ls; echo ~
       - name: Upload Release Asset
-        # id: upload_release_asset
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.release.outputs.asset_path }}
+          asset_path: ${{ steps.make.outputs.asset_path }}
           asset_name: "leanify: ${{ matrix.os }} with ${{ matrix.compiler.cc }}"
           asset_content_type: application/octet-stream
         env:
