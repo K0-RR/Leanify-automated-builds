@@ -34,21 +34,13 @@ jobs:
 
       - name: Run make
         run: cd Leanify; make
-
-        
-  release:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: check
-        run: pwd; ls
         
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         with:
           files: |
-            # Add your build artifacts or release files here
+            Leanify
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: v${{ github.run_number }}
           name: Release v${{ github.run_number }}
