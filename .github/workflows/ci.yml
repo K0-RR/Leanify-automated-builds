@@ -34,10 +34,9 @@ jobs:
         run: |
           cd Leanify
           ${{ matrix.compiler.cc }} --version
-          echo
           make
           mv ./leanify ./leanify-${{ matrix.compiler.cc }}-${{ matrix.os }}
-          echo "ASSET_PATH=${GITHUB_WORKSPACE}/Leanify/leanify" >> $GITHUB_ENV
+          echo "ASSET_PATH=${GITHUB_WORKSPACE}/Leanify/leanify-${{ matrix.compiler.cc }}-${{ matrix.os }}" >> $GITHUB_ENV
 
       - name: Create Release
         id: create_release
