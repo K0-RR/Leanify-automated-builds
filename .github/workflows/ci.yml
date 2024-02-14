@@ -41,7 +41,7 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: Run-${{ github.run_number }}-id-${{ github.run_id }}-on-${{ matrix.os }}-with-${{ matrix.compiler.cc }}
           release_name: Automated prerelease ${{ github.run_number }}
@@ -49,11 +49,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ env.ASSET_PATH }}
-          asset_name: "leanify: ${{ matrix.os }} with ${{ matrix.compiler.cc }}"
+          asset_name: "leanify-${{ matrix.os }}-with-${{ matrix.compiler.cc }}"
           asset_content_type: application/octet-stream
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
