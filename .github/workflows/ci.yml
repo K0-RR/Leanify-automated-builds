@@ -40,15 +40,15 @@ jobs:
         uses: actions/create-release@v1
         with:
           tag_name: v${{ github.run_number }}-${{ github.run_id }}
-          release_name: Release v${{ github.run_number }}
+          release_name: Automated prerelease ${{ github.run_number }}
           # body: Automated build
           draft: true
-          prerelease: true
+          # prerelease: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: check where we are
-        run: cd Leanify; pwd; ls
+      - name: check where we are and who we are
+        run: cd Leanify; pwd; ls; echo ~
       - name: Upload Release Asset
         id: upload_release_asset
         uses: actions/upload-release-asset@v1
