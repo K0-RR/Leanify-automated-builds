@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - windows-latest
+          # - windows-latest
           - ubuntu-latest
           - macos-latest
         compiler:
@@ -26,11 +26,39 @@ jobs:
       CXX: ${{ matrix.compiler.cxx }}
 
     steps:
-      - name: git clone
+      - name: Run git clone
         run: git clone https://github.com/JayXon/Leanify
 
-      - name: compiler version
+      - name: Print compiler version
         run: ${{ matrix.compiler.cc }} --version
 
-      - name: make
+      - name: Run make
         run: cd Leanify; make
+
+        
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          files: |
+            # Add your build artifacts or release files here
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: v${{ github.run_number }}
+          name: Release v${{ github.run_number }}
+          body: |
+            Release notes go here
+
+      - name: Upload Release Asset
+        run: pwd; ls
+        id: upload_release_asset
+        uses: actions/upload-release-asset@v1
+        with:
+          asset_path: ./
+          asset_name: Leanify
+          asset_content_type: application/zip # Replace with the appropriate content type
+          release_id: ${{ steps.create_release.outputs.id }}
+          token: ${{ secrets.GITHUB_TOKEN }}
