@@ -31,7 +31,7 @@ jobs:
 
       - name: Run make, print useful info, and set working dir
         id: make
-        run: PROMPT_COMMAND="echo"; cd Leanify; ${{ matrix.compiler.cc }} --version; make; echo "::set-output name=asset_path::${GITHUB_WORKSPACE}/Leanify/leanify" # pwd; ls
+        run: echo; cd Leanify; ${{ matrix.compiler.cc }} --version; make; echo "::set-output name=asset_path::${GITHUB_WORKSPACE}/Leanify/leanify"
         
       - name: Create Release
         id: create_release
