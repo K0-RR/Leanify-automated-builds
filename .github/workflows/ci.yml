@@ -38,22 +38,19 @@ jobs:
           make
           echo "ASSET_PATH=${GITHUB_WORKSPACE}/Leanify/leanify" >> $GITHUB_ENV
 
-
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: Run-${{ github.run_number }}-id-${{ github.run_id }}-on-${{ matrix.os }}-with-${{ matrix.compiler.cc }}
           release_name: Automated prerelease ${{ github.run_number }}
+          files: |
+            leanify
+            ${{ env.ASSET_PATH }}/leanify
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload Release Asset
-        uses: softprops/action-gh-release@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.ASSET_PATH }}
-          asset_name: "leanify-${{ matrix.os }}-with-${{ matrix.compiler.cc }}"
-          asset_content_type: application/octet-stream
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # upload_url: ${{ steps.create_release.outputs.upload_url }}
+          # asset_path: ${{ env.ASSET_PATH }}
+          # asset_name: "leanify-${{ matrix.os }}-with-${{ matrix.compiler.cc }}"
+          #asset_content_type: application/octet-stream
