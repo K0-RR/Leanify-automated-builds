@@ -39,7 +39,7 @@ jobs:
         id: create_release
         uses: actions/create-release@v1
         with:
-          # tag_name: v${{ github.run_number }}-${{ github.run_id }}
+          tag_name: Run ${{ github.run_number }} - id-${{ github.run_id }} on ${{ matrix.os }} with ${{ matrix.compiler.cc }}
           release_name: Automated prerelease ${{ github.run_number }}
           # body: Automated build
           # prerelease: true
