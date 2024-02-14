@@ -32,10 +32,11 @@ jobs:
       - name: Run make, print useful info, and set working dir
         id: make
         run: |
-          echo
           cd Leanify
           ${{ matrix.compiler.cc }} --version
+          echo
           make
+          mv ./leanify ./leanify-${{ matrix.compiler.cc }}-${{ matrix.os }}
           echo "ASSET_PATH=${GITHUB_WORKSPACE}/Leanify/leanify" >> $GITHUB_ENV
 
       - name: Create Release
