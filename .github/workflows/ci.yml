@@ -36,7 +36,8 @@ jobs:
           cd Leanify
           ${{ matrix.compiler.cc }} --version
           make
-          echo "${GITHUB_WORKSPACE}/Leanify/leanify" >> $GITHUB_STATE/asset_path
+          echo "asset_path=${GITHUB_WORKSPACE}/Leanify/leanify" >> $GITHUB_STATE/asset_path
+
 
       - name: Create Release
         id: create_release
