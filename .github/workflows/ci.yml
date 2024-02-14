@@ -44,9 +44,7 @@ jobs:
         with:
           tag_name: Run-${{ github.run_number }}-id-${{ github.run_id }}-on-${{ matrix.os }}-with-${{ matrix.compiler.cc }}
           release_name: Automated prerelease ${{ github.run_number }}
-          files: |
-            leanify
-            ${{ env.ASSET_PATH }}/leanify
+          files: ${{ env.ASSET_PATH }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
