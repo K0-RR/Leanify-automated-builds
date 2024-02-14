@@ -31,16 +31,19 @@ jobs:
 
       - name: Run make, print useful info, and set working dir
         id: make
-        run: echo; cd Leanify; ${{ matrix.compiler.cc }} --version; make; echo "::set-output name=asset_path::${GITHUB_WORKSPACE}/Leanify/leanify"
-        
+        run: |
+          echo
+          cd Leanify
+          ${{ matrix.compiler.cc }} --version
+          make
+          echo "${GITHUB_WORKSPACE}/Leanify/leanify" >> $GITHUB_STATE/asset_path
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         with:
           tag_name: Run-${{ github.run_number }}-id-${{ github.run_id }}-on-${{ matrix.os }}-with-${{ matrix.compiler.cc }}
           release_name: Automated prerelease ${{ github.run_number }}
-          # body: Automated build
-          # prerelease: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -48,7 +51,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.make.outputs.asset_path }}
+          asset_path: ${{ env.GITHUB_STATE }}/asset_path
           asset_name: "leanify: ${{ matrix.os }} with ${{ matrix.compiler.cc }}"
           asset_content_type: application/octet-stream
         env:
