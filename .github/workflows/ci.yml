@@ -44,6 +44,7 @@ jobs:
         with:
           name: test
           commit: c9932913ff20c1ae0a086e6a6cfc9e6a9f644e59
+          tag: 60
           artifacts: ${{ env.ASSET_PATH }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
