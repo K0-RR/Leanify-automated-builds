@@ -40,15 +40,8 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: softprops/action-gh-release@v1
+      - uses: ncipollo/release-action@v1
         with:
-          tag_name: Run-${{ github.run_number }}-id-${{ github.run_id }}-on-${{ matrix.os }}-with-${{ matrix.compiler.cc }}
-          release_name: Automated prerelease ${{ github.run_number }}
-          files: ${{ env.ASSET_PATH }}
+          artifacts: ${{ ASSET_PATH }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-          # upload_url: ${{ steps.create_release.outputs.upload_url }}
-          # asset_path: ${{ env.ASSET_PATH }}
-          # asset_name: "leanify-${{ matrix.os }}-with-${{ matrix.compiler.cc }}"
-          #asset_content_type: application/octet-stream
