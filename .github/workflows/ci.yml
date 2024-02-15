@@ -43,6 +43,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           name: test
+          commit: 08bfffd
           artifacts: ${{ env.ASSET_PATH }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
