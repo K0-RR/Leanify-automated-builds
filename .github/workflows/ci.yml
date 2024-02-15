@@ -39,13 +39,12 @@ jobs:
           mv ./leanify ./leanify-${{ matrix.compiler.cc }}-${{ matrix.os }}
           echo "ASSET_PATH=${GITHUB_WORKSPACE}/Leanify/leanify-${{ matrix.compiler.cc }}-${{ matrix.os }}" >> $GITHUB_ENV
 
-      - name: Create Release
-        id: create_release
-        uses: ncipollo/release-action@v1
+      - uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          name: test
-          commit: c9932913ff20c1ae0a086e6a6cfc9e6a9f644e59
-          tag: 60
-          artifacts: ${{ env.ASSET_PATH }}
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          # prerelease: false
+          title: "Development Build"
+          files: ${{ env.ASSET_PATH }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
