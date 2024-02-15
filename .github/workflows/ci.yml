@@ -9,8 +9,7 @@ jobs:
   build:
     name: ${{ matrix.compiler.cc }} build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
-    permissions:
-      contents: write
+    permissions: write-all
     strategy:
       matrix:
         os:
