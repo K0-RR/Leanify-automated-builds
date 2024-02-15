@@ -6,6 +6,18 @@ on:
   workflow_dispatch:
 
 jobs:
+  release:
+    name: Make empty release
+    runs-on: ubuntu-latest
+    steps:
+    - name: release
+      uses: softprops/action-gh-release@v1
+      with:
+          tag_name: ${{ github.ref }}
+          release_name: Automated prerelease ${{ github.run_number }}
+
+
+
   build:
     name: ${{ matrix.compiler.cc }} build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -42,13 +54,8 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: Run-${{ github.run_number }}-id-${{ github.run_id }}-on-${{ matrix.os }}-with-${{ matrix.compiler.cc }}
+          tag_name: ${{ github.ref }}
           release_name: Automated prerelease ${{ github.run_number }}
           files: ${{ env.ASSET_PATH }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-          # upload_url: ${{ steps.create_release.outputs.upload_url }}
-          # asset_path: ${{ env.ASSET_PATH }}
-          # asset_name: "leanify-${{ matrix.os }}-with-${{ matrix.compiler.cc }}"
-          #asset_content_type: application/octet-stream
